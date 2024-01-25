@@ -8,8 +8,19 @@
 </head>
 <body>
     <h1> Create a product </h1>
-    <form methods="post" action="{{route('product.store')}}">
-        @csrf('post')
+    <div>
+        @if ($errors->any())
+        <ul>
+            @foreach ($errors->all() as $error)
+
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>            
+        @endif
+    </div>
+    <form methods="Post" action="{{route('products.store')}}">
+        @csrf
+        @method('post')
         <div>
             <label>Name </label>
             <input type="text" name="name" placeholder="name" />
