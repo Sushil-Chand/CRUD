@@ -9,6 +9,7 @@ use App\Models\Product;
 class ProductController extends Controller
 {
     //
+
     public function index(){
         $products = product::all();
         return view('products.index',['products'=> $products]);
@@ -27,8 +28,24 @@ class ProductController extends Controller
         ]);
         $newProduct = Product::create($data);
 
-        return redirect(route('Product.index'));
+        return redirect(route('product.index'));
+      }
+
+    public function edit(product $product){
+       return view('products.edit',['product'=> $product]);
     }
+
+    public function update(product $product, $request){
+        $data = $request->validate([
+            'name'=> 'required',
+            'qty'=>'required|numeric',
+            'price'=>'required|decimal:0,2',
+            'description'=>'nullable'
+        ]);
+        $product->update($data);
+        return redirect(route('product.index'))->width('success', 'product update successfully');
+    }
+
 }
 
 
