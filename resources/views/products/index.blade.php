@@ -7,6 +7,15 @@
     <title>product</title>
 </head>
 <body>
+
+    <div>
+        @if (session('success'))
+            <ul>
+                <li>{{ session('success') }}</li>
+            </ul>
+        @endif
+    </div>
+    
     <h1> Product</h1>
     <div>
         <table border='1'>
