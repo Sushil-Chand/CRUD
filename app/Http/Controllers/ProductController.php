@@ -11,7 +11,8 @@ class ProductController extends Controller
     //
 
     public function index(){
-        $products = product::all();
+
+        $products = Product::all();
         return view('products.index',['products'=> $products]);
     }
     public function create() {
@@ -19,31 +20,33 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
+    
         $data = $request->validate([
+           
             'name'=> 'required',
             'qty'=>'required|numeric',
-            'price'=>'required|decimal:0,2',
+            'price' => 'required|numeric|between:0,9999999999999.99',
             'description'=>'nullable'
 
         ]);
         $newProduct = Product::create($data);
 
-        return redirect(route('product.index'));
+        return redirect(route('product.index'))->with('success', 'Product created successfully');
       }
 
-    public function edit(product $product){
-       return view('products.edit',['product'=> $product]);
+    public function edit(Product $product){
+       return view('products.edit',['Product'=> $product]);
     }
 
-    public function update(product $product, $request){
+    public function update( product $Product, $request){
         $data = $request->validate([
             'name'=> 'required',
             'qty'=>'required|numeric',
-            'price'=>'required|decimal:0,2',
+            'price' => 'required|decimal|between:0,9999999999999.99',
             'description'=>'nullable'
         ]);
         $product->update($data);
-        return redirect(route('product.index'))->width('success', 'product update successfully');
+        return redirect(route('products.index'))->with('success', 'product update successfully');
     }
 
 }
