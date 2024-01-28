@@ -35,10 +35,11 @@ class ProductController extends Controller
       }
 
     public function edit(Product $product){
-       return view('products.edit',['Product'=> $product]);
+   
+       return view('products.edit',['product'=> $product]);
     }
 
-    public function update( product $Product, $request){
+    public function update( Product $product, $request){
         $data = $request->validate([
             'name'=> 'required',
             'qty'=>'required|numeric',
@@ -46,7 +47,7 @@ class ProductController extends Controller
             'description'=>'nullable'
         ]);
         $product->update($data);
-        return redirect(route('products.index'))->with('success', 'product update successfully');
+        return redirect(route('product.index'))->with('success', 'product update successfully');
     }
 
 }
